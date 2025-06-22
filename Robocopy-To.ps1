@@ -1,4 +1,7 @@
 <#
+Robocopy-To.ps1
+https://github.com/ZeroErrors/robocopy-to
+
 .SYNOPSIS
   Context-menu helper that copies one folder to another using Robocopy.
   First parameter  = source folder supplied by Explorer.
@@ -16,7 +19,11 @@ param(
 if (-not $Dest) {
     $shell = New-Object -ComObject Shell.Application
     $folder = $shell.BrowseForFolder(0,'Choose destination',0)
-    if (-not $folder) { exit }                 # user clicked Cancel
+    if (-not $folder) {
+        Write-Host "No destination folder selected. Exiting." -ForegroundColor Red
+        pause
+        exit
+    }
     $Dest = $folder.Self.Path
 }
 
